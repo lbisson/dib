@@ -8,6 +8,7 @@ module.exports = {
   },
   env: {
     browser: true,
+    jest: true
   },
   // https://github.com/standard/standard/blob/master/docs/RULES-en.md
   extends: 'standard',
@@ -17,6 +18,8 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
+    // allow paren-less arrow functions
+    'arrow-parens': 0,
     // allow async-await
     'generator-star-spacing': 'off',
     // allow debugger during development

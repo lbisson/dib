@@ -14,69 +14,118 @@
                                 v-model=projectName>
                     </div>
                     <div class="form-group">
-                        <label for="sourceRepo">Source Code Repository URL</label>
+                         <label>Docker Configuration:  <br></label>
+                        
+                        <label for="Single">
+                            <input
+                                    type="radio"
+                                    id="single"
+                                    value="Single"
+                                    v-model=dockerConfig> Single Container
+                        </label>
+                        <label for="Multiple">
+                            <input
+                                    type="radio"
+                                    id="multiple"
+                                    value="Multiple"
+                                    v-model=dockerConfig> Multiple Containers
+                        </label>
+    
+                        
+                </div>
+                 
+                    <div class="form-group">
+                         <label>Repository Type:  <br></label>
+                        
+                        <label for="Git">
+                            <input
+                                    type="radio"
+                                    id="git"
+                                    value="Git"
+                                    v-model=sourceRepo> Git
+                        </label>
+    
+                        <label for="GitHub">
+                            <input
+                                    type="radio"
+                                    id="github"
+                                    value="GitHub"
+                                    v-model=sourceRepo> GitHub
+                        </label>
+                        <label for="Subversion">
+                            <input
+                                    type="radio"
+                                    id="subversion"
+                                    value="Subversion"
+                                    v-model=sourceRepo> Subversion
+                        </label>
+                        <label for="Bitbucket">
+                            <input
+                                    type="radio"
+                                    id="bitbucket"
+                                    value="Bitbucket"
+                                    v-model=sourceRepo> Bitbucket
+                        </label>
+                </div>
+                <div class="form-group">
+                        <label for="sourceRepoURL">Source Code Repository URL</label>
                         <input
                                 type="text"
-                                id="sourceRepo"
+                                id="sourceRepoURL"
                                 class="form-control"
-                                v-model=sourceRepo>
+                                v-model=sourceRepoURL>
                     </div>
 
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-                    <div class="form-group">
-                        <label for="javascript">
-                            <input
-                                    type="checkbox"
-                                    id="javascript"
-                                    value="JavaScript"> Java Script
-                        </label>
-                        <label for="ruby">
-                            <input
-                                    type="checkbox"
-                                    id="ruby"
-                                    value="Ruby"> Ruby
-                        </label>
-                    </div>
 
-                </div>
-            </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 form-group">
+                    <label>Requested Pipeline Stages: </label>
                     <label for="build">
                         <input
-                                type="radio"
+                                type="checkbox"
                                 id="build"
-                                value="build"> Build
+                                value="Build"
+                                v-model=stages> Build
                     </label>
                     <label for="test">
                         <input
-                                type="radio"
+                                type="checkbox"
                                 id="test"
-                                value="test"> Test
+                                value="Test"
+                                v-model=stages> Test
                     </label>
                     <label for="deliver">
                         <input
-                                type="radio"
+                                type="checkbox"
                                 id="deliver"
-                                value="deliver"> Deliver
+                                value="Deliver"
+                                v-model=stages> Deliver
                     </label>
                 </div>
             </div>
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 form-group">
+                        <label for="deploymentURL">Deployment URL</label>
+                        <input
+                                type="text"
+                                id="deploymentURL"
+                                class="form-control"
+                                v-model=deploymentURL>
+                    </div>
             <hr>
             <div class="row">
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
                     <button
-                            class="btn btn-primary">Submit!
+                            class="btn btn-primary"
+                            @click.prevent="submitted">Submit!
                     </button>
                 </div>
             </div>
         </form>
         <hr>
-        <div class="row">
+        <div class="row" v-if="isSubmitted">
             <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -84,9 +133,13 @@
                     </div>
                     <div class="panel-body">
                         <p>Pipeline Project Name: {{projectName}}</p>
-                        <p>Source Code Repository: {{sourceRepo}}</p>
-                        <p>Language(s):</p>
-                        <p>Stage(s): </p>
+                        <p>Docker Configuration: {{dockerConfig}}</p>
+                        <p>Repository: {{sourceRepo}}</p>
+                        <p>Source Code Repository: {{sourceRepoURL}}</p>
+                       <ul>Requested Pipeline Stages
+                           <li v-for="stage in stages">{{stage}}</li>
+                       </ul>
+                       <p>Deployment URL: {{deploymentURL}}</p>
                     </div>
                 </div>
             </div>
@@ -102,7 +155,17 @@ export default {
     return {
       msg: 'Create a DevSecOps Pipeline',
       projectName: '',
-      sourceRepo: ''
+      sourceRepo: '',
+      sourceRepoURL: '',
+      dockerConfig: '',
+      stages: [],
+      deploymentURL: '',
+      isSubmitted: false
+    }
+  },
+  methods: {
+    submitted () {
+      this.isSubmitted = true
     }
   }
 }
