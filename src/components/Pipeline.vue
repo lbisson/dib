@@ -6,12 +6,12 @@
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
                     <hr>
                     <div class="form-group">
-                        <label for="projectName">Pipeline Project Name</label>
+                        <label for="app_name">Pipeline Project Name</label>
                         <input
                                 type="text"
-                                id="projectName"
+                                id="app_name"
                                 class="form-control"
-                                v-model=projectName>
+                                v-model=pipeline.app.app_name>
                     </div>
                     <div class="form-group">
                          <label>Docker Configuration:  <br></label>
@@ -20,60 +20,72 @@
                             <input
                                     type="radio"
                                     id="single"
-                                    value="Single"
-                                    v-model=dockerConfig> Single Container
+                                    value="DOCKER_RUN"
+                                    v-model=pipeline.app.pipeline.app_type> Single Container
                         </label>
                         <label for="Multiple">
                             <input
                                     type="radio"
                                     id="multiple"
-                                    value="Multiple"
-                                    v-model=dockerConfig> Multiple Containers
-                        </label>
-    
+                                    value="DOCKER_COMPOSE"
+                                    v-model=pipeline.app.pipeline.app_type> Multiple Containers
+                        </label>   
+                    </div>
+
+                     <div class="form-group">
+                         <label>Version Control:  <br></label>
                         
-                </div>
-                 
-                    <div class="form-group">
-                         <label>Repository Type:  <br></label>
-                        
-                        <label for="Git">
+                        <label for="git">
                             <input
                                     type="radio"
                                     id="git"
-                                    value="Git"
-                                    v-model=sourceRepo> Git
+                                    value="git"
+                                    v-model=pipeline.app.pipeline.build_job.version_control.type> Git
                         </label>
-    
-                        <label for="GitHub">
+                        <label for="github">
                             <input
                                     type="radio"
                                     id="github"
-                                    value="GitHub"
-                                    v-model=sourceRepo> GitHub
-                        </label>
-                        <label for="Subversion">
-                            <input
-                                    type="radio"
-                                    id="subversion"
-                                    value="Subversion"
-                                    v-model=sourceRepo> Subversion
-                        </label>
-                        <label for="Bitbucket">
-                            <input
-                                    type="radio"
-                                    id="bitbucket"
-                                    value="Bitbucket"
-                                    v-model=sourceRepo> Bitbucket
-                        </label>
-                </div>
-                <div class="form-group">
-                        <label for="sourceRepoURL">Source Code Repository URL</label>
+                                    value="github"
+                                    v-model=pipeline.app.pipeline.build_job.version_control.type> GitHub
+                        </label>   
+                    </div>
+
+                    <div class="form-group">
+                        <label for="app_name">Version Control URL</label>
                         <input
                                 type="text"
-                                id="sourceRepoURL"
+                                id="app_name"
                                 class="form-control"
-                                v-model=sourceRepoURL>
+                                v-model=pipeline.app.pipeline.build_job.version_control.url>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="app_name">Version Control Branch</label>
+                        <input
+                                type="text"
+                                id="app_name"
+                                class="form-control"
+                                v-model=pipeline.app.pipeline.build_job.version_control.branch>
+                    </div>
+                    
+
+                     <div class="form-group">
+                        <label for="app_name">Build Target</label>
+                        <input
+                                type="text"
+                                id="app_name"
+                                class="form-control"
+                                v-model=pipeline.app.pipeline.build_job.build_target>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="app_name">Delivery Target URL</label>
+                        <input
+                                type="text"
+                                id="app_name"
+                                class="form-control"
+                                v-model=pipeline.app.pipeline.deploy_job.deploy_target>
                     </div>
 
                 </div>
@@ -106,14 +118,7 @@
                     </label>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 form-group">
-                        <label for="deploymentURL">Deployment URL</label>
-                        <input
-                                type="text"
-                                id="deploymentURL"
-                                class="form-control"
-                                v-model=deploymentURL>
-                    </div>
+           
             <hr>
             <div class="row">
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
@@ -124,27 +129,6 @@
                 </div>
             </div>
         </form>
-        <hr>
-        <div class="row" v-if="isSubmitted">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4>Your Pipeline Data</h4>
-                    </div>
-                    <div class="panel-body">
-                        <p>Pipeline Project Name: {{projectName}}</p>
-                        <p>Docker Configuration: {{dockerConfig}}</p>
-                        <p>Repository: {{sourceRepo}}</p>
-                        <p>Source Code Repository: {{sourceRepoURL}}</p>
-                       <ul>Requested Pipeline Stages
-                           <li v-for="stage in stages">{{stage}}</li>
-                       </ul>
-                       <p>Deployment URL: {{deploymentURL}}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
   </div>
 </template>
 
@@ -154,18 +138,42 @@ export default {
   data () {
     return {
       msg: 'Create a DevSecOps Pipeline',
-      projectName: '',
-      sourceRepo: '',
-      sourceRepoURL: '',
-      dockerConfig: '',
       stages: [],
-      deploymentURL: '',
-      isSubmitted: false
+      pipeline: {
+        jenkins_version: '',
+        app: {
+          app_name: '',
+          pipeline: {
+            app_type: '',
+            build_job: {
+              version_control: {
+                type: '',
+                url: '',
+                branch: ''
+              },
+              build_target: ''
+            },
+            deploy_job: {
+              deploy_target: '',
+              deploy_commands: ''
+            },
+            test_job: {
+              test_type: '',
+              test_command: ''
+            }
+          }
+        }
+      }
     }
   },
   methods: {
     submitted () {
-      this.isSubmitted = true
+      this.$http.post('http://localhost:3000/pipelines', this.pipeline)
+        .then(response => {
+          console.log(response)
+        }, error => {
+          console.log(error)
+        })
     }
   }
 }
