@@ -138,32 +138,12 @@ export default {
   data () {
     return {
       msg: 'Create a DevSecOps Pipeline',
-      stages: [],
-      pipeline: {
-        jenkins_version: '',
-        app: {
-          app_name: '',
-          pipeline: {
-            app_type: '',
-            build_job: {
-              version_control: {
-                type: '',
-                url: '',
-                branch: ''
-              },
-              build_target: ''
-            },
-            deploy_job: {
-              deploy_target: '',
-              deploy_commands: ''
-            },
-            test_job: {
-              test_type: '',
-              test_command: ''
-            }
-          }
-        }
-      }
+      stages: []
+    }
+  },
+  computed: {
+    pipeline () {
+      return this.$store.state.pipeline
     }
   },
   methods: {
