@@ -23,10 +23,7 @@ export const store = new Vuex.Store({
             deploy_target: '',
             deploy_commands: ''
           },
-          test_job: {
-            test_type: '',
-            test_command: ''
-          }
+          test_jobs: []
         }
       }
     }

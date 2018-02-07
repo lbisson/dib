@@ -5,9 +5,12 @@ import VueResource from 'vue-resource'
 import App from './App'
 import router from './router'
 import {store} from './store/store'
+import TestJobs from './components/TestJobs'
 
 Vue.config.productionTip = false
 Vue.use(VueResource)
+
+Vue.component('dib-test-jobs', TestJobs )
 
 /* eslint-disable no-new */
 new Vue({

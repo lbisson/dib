@@ -1,16 +1,22 @@
 <template>
   <div>
-      <form>
+    <hr>
+    <form>
       <div class="row">
           <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-                    <hr>
+            <label for="testtype">Select Test Type</label>
+             <select id="testtype" v-model=testJob.test_type>
+                <option value="UNIT_TEST">Unit</option>
+                <option value="SMOKE_TEST">Smoke</option>
+                <option value="INTEGRATION">Integration</option>
+              </select>      
                     <div class="form-group">
                         <label for="testjob">Add command for a Test Job</label>
                         <input
                                 type="text"
                                 id="testjob"
                                 class="form-control"
-                                v-model=testJob>
+                                v-model=testJob.test_command>
                     </div>
                     <button @click="addJob">Add Test Job</button>
             </div>
@@ -18,7 +24,7 @@
         <hr>
       </form>
        <ul class="list-group">
-            <li v-for="job in testJobs">{{ job }}</li>
+            <li v-for="job in pipeline.app.pipeline.test_jobs">{{ job.test_type }} : {{job.test_command}}</li>
         </ul>
   </div>
 
@@ -28,15 +34,18 @@
 export default {
   data: function () {
     return {
-      testJobs: ['hello', 'there'],
-      testJob: ''
+       testJob: {
+        test_type: 'UNIT_TEST',
+        test_command: ''
+      }
     }
   },
+  props: ['pipeline'],
   methods: {
     addJob () {
-      this.testJobs.push(this.testJob)
+      this.pipeline.app.pipeline.test_jobs.push(this.testJob)
       // console.log(this.testJobs)
-      this.testJob = ''
+      this.testJob = {}
     }
   }
 }

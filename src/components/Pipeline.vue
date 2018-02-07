@@ -90,7 +90,9 @@
 
                 </div>
             </div>
-
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+              <dib-test-jobs :pipeline="pipeline"></dib-test-jobs>
+            </div>
 
             <div class="row">
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 form-group">
