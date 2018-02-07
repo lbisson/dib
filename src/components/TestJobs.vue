@@ -8,7 +8,13 @@
              <select id="testtype" v-model=testJob.test_type>
                 <option value="UNIT_TEST">Unit</option>
                 <option value="SMOKE_TEST">Smoke</option>
-                <option value="INTEGRATION">Integration</option>
+                <option value="INTEGRATION">Integration</option>                                <option value="INTEGRATION">Integration</option>
+                <option value="VULNERABILITY_TEST">Vulnerability</option>
+                <option value="CODE_QUALITY_TEST">Code Quality</option>
+                <option value="MUTATION_TEST">Mutation</option>
+                <option value="FUNCTIONAL_TEST">Functional</option>
+                <option value="SECURITY_TEST">Security</option>
+
               </select>      
                     <div class="form-group">
                         <label for="testjob">Add command for a Test Job</label>
