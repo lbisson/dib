@@ -40,7 +40,7 @@
 export default {
   data: function () {
     return {
-       testJob: {
+      testJob: {
         test_type: 'UNIT_TEST',
         test_command: ''
       }

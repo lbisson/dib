@@ -11,18 +11,8 @@ export const store = new Vuex.Store({
         app_name: '',
         pipeline: {
           app_type: '',
-          build_job: {
-            version_control: {
-              type: '',
-              url: '',
-              branch: ''
-            },
-            build_target: ''
-          },
-          deploy_job: {
-            deploy_target: '',
-            deploy_commands: ''
-          },
+          build_jobs: [],
+          deploy_jobs: [],
           test_jobs: []
         }
       }

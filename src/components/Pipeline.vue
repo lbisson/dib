@@ -2,99 +2,7 @@
   <div class="pipeline">
     <h1>{{ msg }}</h1>
     <form>
-            <div class="row">
-                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-                    <hr>
-                    <div class="form-group">
-                        <label for="app_name">Pipeline Project Name</label>
-                        <input
-                                type="text"
-                                id="app_name"
-                                class="form-control"
-                                v-model=pipeline.app.app_name>
-                    </div>
-                    <div class="form-group">
-                         <label>Docker Configuration:  <br></label>
-                        
-                        <label for="Single">
-                            <input
-                                    type="radio"
-                                    id="single"
-                                    value="DOCKER_RUN"
-                                    v-model=pipeline.app.pipeline.app_type> Single Container
-                        </label>
-                        <label for="Multiple">
-                            <input
-                                    type="radio"
-                                    id="multiple"
-                                    value="DOCKER_COMPOSE"
-                                    v-model=pipeline.app.pipeline.app_type> Multiple Containers
-                        </label>   
-                    </div>
-
-                     <div class="form-group">
-                         <label>Version Control:  <br></label>
-                        
-                        <label for="git">
-                            <input
-                                    type="radio"
-                                    id="git"
-                                    value="git"
-                                    v-model=pipeline.app.pipeline.build_job.version_control.type> Git
-                        </label>
-                        <label for="github">
-                            <input
-                                    type="radio"
-                                    id="github"
-                                    value="github"
-                                    v-model=pipeline.app.pipeline.build_job.version_control.type> GitHub
-                        </label>   
-                    </div>
-
-                    <div class="form-group">
-                        <label for="app_name">Version Control URL</label>
-                        <input
-                                type="text"
-                                id="app_name"
-                                class="form-control"
-                                v-model=pipeline.app.pipeline.build_job.version_control.url>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="app_name">Version Control Branch</label>
-                        <input
-                                type="text"
-                                id="app_name"
-                                class="form-control"
-                                v-model=pipeline.app.pipeline.build_job.version_control.branch>
-                    </div>
-                    
-
-                     <div class="form-group">
-                        <label for="app_name">Build Target</label>
-                        <input
-                                type="text"
-                                id="app_name"
-                                class="form-control"
-                                v-model=pipeline.app.pipeline.build_job.build_target>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="app_name">Delivery Target URL</label>
-                        <input
-                                type="text"
-                                id="app_name"
-                                class="form-control"
-                                v-model=pipeline.app.pipeline.deploy_job.deploy_target>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-              <dib-test-jobs :pipeline="pipeline"></dib-test-jobs>
-            </div>
-
-            <div class="row">
+                  <div class="row">
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 form-group">
                     <label>Requested Pipeline Stages: </label>
                     <label for="build">
@@ -120,6 +28,24 @@
                     </label>
                 </div>
             </div>
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+                
+              <div >
+                  <dib-project-config :pipeline="pipeline"></dib-project-config>
+              </div>
+                 <div>
+                  <dib-build-jobs :pipeline="pipeline"></dib-build-jobs>
+                </div>
+
+                <div>
+                  <dib-test-jobs :pipeline="pipeline"></dib-test-jobs>
+                </div>
+            <div>
+                <dib-deploy-jobs :pipeline="pipeline"></dib-deploy-jobs>
+            </div>
+
+
+                </div>
            
             <hr>
             <div class="row">
